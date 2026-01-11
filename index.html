@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ramadan Planner Pro | Spiritual Meal Management</title>
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.3/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Adjust paths for root injection
+            UI.injectNavbar('home', true);
+        });
+    </script>
+
+    <main class="container mx-auto px-6 py-20 text-center">
+        <section class="hero fade-up">
+            <div class="mb-6 flex justify-center">
+                <div class="glass-dark p-4 rounded-full px-8 flex items-center gap-2">
+                    <span class="w-3 h-3 bg-gold rounded-full animate-pulse"></span>
+                    <span class="text-sm font-semibold tracking-widest text-gold text-uppercase">RAMADAN KAREEM
+                        2026</span>
+                </div>
+            </div>
+
+            <h1 class="text-6xl md:text-8xl font-bold text-white mb-6">
+                Elevate Your <span class="text-gold-gradient">Ramadan</span> Experience
+            </h1>
+            <p class="text-xl text-gray-300 max-w-2xl mx-auto mb-12">
+                The most advanced AI-powered meal planner designed to nurture your body and soul. Personalized Iftar and
+                Suhoor plans, shopping lists, and nutrition tracking.
+            </p>
+
+            <div class="flex flex-col md:flex-row justify-center gap-6">
+                <a href="pages/planner.html" class="btn-premium text-lg px-12 py-5">
+                    Create Your 30-Day Plan <i data-lucide="arrow-right"></i>
+                </a>
+                <a href="pages/dashboard.html"
+                    class="glass-dark p-4 rounded-xl px-12 font-bold flex items-center gap-2 hover:bg-white/20 transition cursor-pointer">
+                    View My Plans <i data-lucide="layout"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- Features Quick View -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-32 px-4">
+            <div class="glass p-8 text-left hover:scale-105 transition-transform duration-500">
+                <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center mb-6">
+                    <i data-lucide="brain" class="text-navy w-8 h-8"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-4">AI Integration</h3>
+                <p class="text-gray-600">Smart generators that respect your budget, family size, and local cuisine
+                    preferences.</p>
+            </div>
+            <div class="glass p-8 text-left hover:scale-105 transition-transform duration-500">
+                <div class="w-14 h-14 bg-orange-100 rounded-2xl flex items-center justify-center mb-6">
+                    <i data-lucide="activity" class="text-orange-600 w-8 h-8"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-4">Nutrition Focus</h3>
+                <p class="text-gray-600">Track protein, hydration, and sugar levels to maintain energy from Suhoor to
+                    Iftar.</p>
+            </div>
+            <div class="glass p-8 text-left hover:scale-105 transition-transform duration-500">
+                <div class="w-14 h-14 bg-green-100 rounded-2xl flex items-center justify-center mb-6">
+                    <i data-lucide="leaf" class="text-success w-8 h-8"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-4">Zero Waste</h3>
+                <p class="text-gray-600">Built-in leftover management tips to ensure every meal is used purposefully.
+                </p>
+            </div>
+        </section>
+    </main>
+
+
+    <script src="js/app.js"></script>
+    <style>
+        .hero h1 {
+            line-height: 1.1;
+        }
+
+        body {
+            background: #0d1240;
+        }
+    </style>
+</body>
+
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planner Dashboard | Ramadan Pro</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.3/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-navy">
+
+    <main class="container mx-auto px-6 py-12">
+        <!-- Dashboard Header -->
+        <div class="flex flex-col md:flex-row justify-between items-end gap-6 mb-12">
+            <div>
+                <h1 class="text-4xl font-bold text-white mb-2">My <span class="text-gold">Plan</span> Dashboard</h1>
+                <p class="text-gray-400">Current Phase: <span class="text-success font-bold">Iftar Preparation</span>
+                </p>
+            </div>
+            <div class="glass p-4 rounded-2xl flex items-center gap-6">
+                <div class="text-right">
+                    <p class="text-xs text-gray-500 font-bold">IFTAR COUNTDOWN</p>
+                    <p id="countdown" class="text-2xl font-bold text-navy">00:00:00</p>
+                </div>
+                <div class="h-10 w-px bg-gray-200"></div>
+                <button onclick="window.location.href='planner.html'" class="btn-premium py-2 px-4 text-sm">
+                    Re-Generate Plan
+                </button>
+            </div>
+        </div>
+
+        <div id="no-plan" class="glass p-20 text-center hidden">
+            <h2 class="text-2xl font-bold mb-4">No Active Plan Found</h2>
+            <p class="mb-8">Start by generating your personalized 30-day Ramadan plan.</p>
+            <a href="planner.html" class="btn-premium">Create Plan Now</a>
+        </div>
+
+        <div id="dashboard-content" class="space-y-12">
+            <!-- Top Stats Row -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="glass p-6 border-l-4 border-gold">
+                    <p class="text-xs font-bold text-gray-500 mb-1">SELECTED DAY</p>
+                    <div class="flex items-center gap-3">
+                        <select id="day-selector" onchange="switchDay(this.value)"
+                            class="text-2xl font-bold text-navy bg-transparent outline-none"></select>
+                        <i data-lucide="chevron-down" class="text-gold"></i>
+                    </div>
+                </div>
+                <div class="glass p-6 border-l-4 border-navy">
+                    <p class="text-xs font-bold text-gray-500 mb-1">TOTAL CALORIES</p>
+                    <p id="stat-calories" class="text-2xl font-bold text-navy">0 kcal</p>
+                </div>
+                <div class="glass p-6 border-l-4 border-green-500">
+                    <p class="text-xs font-bold text-gray-500 mb-1">BUDGET STATUS</p>
+                    <p id="stat-budget" class="text-2xl font-bold text-navy">Healthy</p>
+                </div>
+                <div class="glass p-6 border-l-4 border-pink-500">
+                    <p class="text-xs font-bold text-gray-500 mb-1">SUGAR LEVEL</p>
+                    <p id="stat-sugar" class="text-2xl font-bold text-navy">Moderate</p>
+                </div>
+            </div>
+
+            <!-- Main Menu Cards -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Suhoor -->
+                <div class="glass p-8 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <i data-lucide="sun" class="w-32 h-32"></i>
+                    </div>
+                    <span
+                        class="bg-orange-100 text-orange-600 px-4 py-1 rounded-full text-xs font-bold mb-4 inline-block">SUHOOR</span>
+                    <h2 id="suhoor-title" class="text-3xl font-bold text-navy mb-6">...</h2>
+                    <ul id="suhoor-list" class="space-y-3 mb-8 text-gray-700"></ul>
+                    <div class="bg-orange-50 p-4 rounded-xl">
+                        <p class="text-xs font-bold text-orange-800 mb-1">LEFTOVER MANAGEMENT</p>
+                        <p id="suhoor-leftover" class="text-sm italic text-orange-900"></p>
+                    </div>
+                </div>
+
+                <!-- Iftar -->
+                <div class="glass p-8 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <i data-lucide="moon" class="w-32 h-32"></i>
+                    </div>
+                    <span
+                        class="bg-gold/20 text-gold px-4 py-1 rounded-full text-xs font-bold mb-4 inline-block">IFTAR</span>
+                    <h2 id="iftar-title" class="text-3xl font-bold text-navy mb-6">...</h2>
+                    <ul id="iftar-list" class="space-y-3 mb-8 text-gray-700"></ul>
+                    <div class="bg-yellow-50 p-4 rounded-xl">
+                        <p class="text-xs font-bold text-brown mb-1">LEFTOVER MANAGEMENT</p>
+                        <p id="iftar-leftover" class="text-sm italic text-brown"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nutritional Analytics & Tips -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="glass p-8 lg:col-span-2">
+                    <h3 class="text-xl font-bold text-navy mb-6">Macronutrient Breakdown</h3>
+                    <div class="h-64">
+                        <canvas id="nutritionChart"></canvas>
+                    </div>
+                </div>
+                <div class="space-y-6">
+                    <div class="glass p-6 bg-gradient-to-br from-green-50 to-white">
+                        <div class="flex items-center gap-3 mb-4">
+                            <i data-lucide="recycle" class="text-success"></i>
+                            <h4 class="font-bold">Zero-Waste Tip</h4>
+                        </div>
+                        <p id="waste-tip" class="text-sm text-gray-600"></p>
+                    </div>
+                    <div class="glass p-6 bg-gradient-to-br from-blue-50 to-white">
+                        <div class="flex items-center gap-3 mb-4">
+                            <i data-lucide="thermometer" class="text-navy"></i>
+                            <h4 class="font-bold">Storage Hack</h4>
+                        </div>
+                        <p id="storage-tip" class="text-sm text-gray-600"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/app.js"></script>
+    <script>
+        let currentDay = 1;
+        let chart = null;
+        let plan = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            UI.injectNavbar('dashboard');
+            initDashboard();
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        });
+
+        function initDashboard() {
+            const raw = localStorage.getItem('ramadan_plan');
+            if (!raw) {
+                document.getElementById('no-plan').classList.remove('hidden');
+                document.getElementById('dashboard-content').classList.add('hidden');
+                return;
+            }
+
+            plan = JSON.parse(raw);
+            const selector = document.getElementById('day-selector');
+            plan.days.forEach(d => {
+                const opt = document.createElement('option');
+                opt.value = d.day;
+                opt.innerText = `Day ${d.day}`;
+                selector.appendChild(opt);
+            });
+
+            renderDay(1);
+        }
+
+        function switchDay(val) {
+            currentDay = parseInt(val);
+            renderDay(currentDay);
+        }
+
+        function renderDay(dayNum) {
+            const d = plan.days.find(x => x.day === dayNum);
+            if (!d) return;
+
+            // Stats
+            const totalCals = d.suhoor.nutrition.calories + d.iftar.nutrition.calories;
+            document.getElementById('stat-calories').innerText = `${totalCals} kcal`;
+            document.getElementById('stat-sugar').innerText = (d.suhoor.nutrition.sugar + d.iftar.nutrition.sugar) > 40 ? 'High' : 'Optimal';
+
+            // Suhoor
+            document.getElementById('suhoor-title').innerText = d.suhoor.meal;
+            document.getElementById('suhoor-list').innerHTML = d.suhoor.items.map(i => `
+                <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-orange-400"></i> ${i}</li>
+            `).join('');
+            document.getElementById('suhoor-leftover').innerText = d.suhoor.leftoverTips;
+
+            // Iftar
+            document.getElementById('iftar-title').innerText = d.iftar.meal;
+            document.getElementById('iftar-list').innerHTML = d.iftar.items.map(i => `
+                <li class="flex items-center gap-2"><i data-lucide="check-circle" class="w-4 h-4 text-gold"></i> ${i}</li>
+            `).join('');
+            document.getElementById('iftar-leftover').innerText = d.iftar.leftoverTips;
+
+            // Tips
+            document.getElementById('waste-tip').innerText = d.wasteTip;
+            document.getElementById('storage-tip').innerText = d.storageTip;
+
+            lucide.createIcons();
+            updateChart(d);
+        }
+
+        function updateChart(d) {
+            const ctx = document.getElementById('nutritionChart').getContext('2d');
+            const data = {
+                labels: ['Protein', 'Carbs', 'Fat'],
+                datasets: [{
+                    label: 'Suhoor',
+                    data: [d.suhoor.nutrition.protein, d.suhoor.nutrition.carbs, d.suhoor.nutrition.fat],
+                    backgroundColor: 'rgba(212, 175, 55, 0.6)',
+                }, {
+                    label: 'Iftar',
+                    data: [d.iftar.nutrition.protein, d.iftar.nutrition.carbs, d.iftar.nutrition.fat],
+                    backgroundColor: 'rgba(26, 35, 126, 0.6)',
+                }]
+            };
+
+            if (chart) chart.destroy();
+            chart = new Chart(ctx, {
+                type: 'bar',
+                data: data,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: { y: { beginAtZero: true } }
+                }
+            });
+        }
+
+        function updateCountdown() {
+            const now = new Date();
+            const iftar = new Date();
+            iftar.setHours(18, 15, 0); // Mock Iftar
+            if (now > iftar) iftar.setDate(iftar.getDate() + 1);
+
+            const diff = iftar - now;
+            const h = Math.floor(diff / 3600000);
+            const m = Math.floor((diff % 3600000) / 60000);
+            const s = Math.floor((diff % 60000) / 1000);
+            document.getElementById('countdown').innerText = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+        }
+    </script>
+</body>
+
+</html>

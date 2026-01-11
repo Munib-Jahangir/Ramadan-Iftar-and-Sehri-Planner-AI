@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping List | Ramadan Pro</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.3/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-navy">
+
+    <main class="container mx-auto px-6 py-12">
+        <header class="mb-12">
+            <h1 class="text-4xl font-bold text-white mb-2">Shopping & <span class="text-gold">Budget</span></h1>
+            <p class="text-gray-400">Streamline your market visits with our smart categorizer.</p>
+        </header>
+
+        <div id="no-plan" class="glass p-20 text-center hidden">
+            <h2 class="text-2xl font-bold mb-4">Plan First to Generate Shopping List</h2>
+            <a href="planner.html" class="btn-premium">Generate Plan</a>
+        </div>
+
+        <div id="shopping-content" class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            <!-- Categorized List -->
+            <div class="lg:col-span-2 space-y-8">
+                <div id="shopping-categories" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Categories will be injected here -->
+                </div>
+
+                <div class="glass p-8 bg-navy-deep text-white">
+                    <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
+                        <i data-lucide="calculator" class="text-gold"></i> Budget Optimizer Advice
+                    </h3>
+                    <ul id="budget-advice" class="space-y-4"></ul>
+                </div>
+            </div>
+
+            <!-- Actions & Export -->
+            <div class="space-y-6">
+                <div class="glass p-8">
+                    <h3 class="text-lg font-bold mb-6">Manage Export</h3>
+                    <div class="space-y-3">
+                        <button onclick="exportTXT()"
+                            class="w-full bg-blue-50 text-blue-700 p-4 rounded-xl flex items-center justify-between hover:bg-blue-100 transition">
+                            <span>Plain Text List</span>
+                            <i data-lucide="file-text"></i>
+                        </button>
+                        <button onclick="exportJSON()"
+                            class="w-full bg-orange-50 text-orange-700 p-4 rounded-xl flex items-center justify-between hover:bg-orange-100 transition">
+                            <span>JSON Data Backup</span>
+                            <i data-lucide="database"></i>
+                        </button>
+                        <button onclick="shareWA()"
+                            class="w-full bg-green-500 text-white p-4 rounded-xl flex items-center justify-between hover:bg-green-600 transition">
+                            <span>Share to WhatsApp</span>
+                            <i data-lucide="message-circle"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Bulk Buying Tracker -->
+                <div class="glass p-8">
+                    <h4 class="font-bold text-navy mb-4">Bulk Items Reminder</h4>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm">Flour (20kg)</span>
+                            <input type="checkbox" class="w-5 h-5 accent-gold">
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm">Dates (5kg)</span>
+                            <input type="checkbox" class="w-5 h-5 accent-gold" checked>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm">Oil (10L)</span>
+                            <input type="checkbox" class="w-5 h-5 accent-gold">
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm">Sugar (10kg)</span>
+                            <input type="checkbox" class="w-5 h-5 accent-gold">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/app.js"></script>
+    <script>
+        let plan = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            UI.injectNavbar('shopping');
+            initShopping();
+        });
+
+        function initShopping() {
+            const raw = localStorage.getItem('ramadan_plan');
+            if (!raw) {
+                document.getElementById('no-plan').classList.remove('hidden');
+                document.getElementById('shopping-content').classList.add('hidden');
+                return;
+            }
+
+            plan = JSON.parse(raw);
+            renderShopping();
+        }
+
+        function renderShopping() {
+            const container = document.getElementById('shopping-categories');
+            container.innerHTML = '';
+
+            for (const [cat, items] of Object.entries(plan.shoppingList)) {
+                const card = document.createElement('div');
+                card.className = 'glass p-6';
+                card.innerHTML = `
+                    <h3 class="font-bold text-navy mb-4 border-b pb-2 flex justify-between">
+                        ${cat}
+                        <span class="text-xs bg-navy text-white px-2 py-1 rounded">${items.length} items</span>
+                    </h3>
+                    <ul class="space-y-3">
+                        ${items.map(i => `
+                            <li class="flex items-center gap-3 text-sm">
+                                <input type="checkbox" class="w-4 h-4 accent-gold">
+                                <span>${i}</span>
+                            </li>
+                        `).join('')}
+                    </ul>
+                `;
+                container.appendChild(card);
+            }
+
+            const adviceList = document.getElementById('budget-advice');
+            adviceList.innerHTML = plan.budgetAdvice.map(a => `
+                <li class="flex gap-3 text-sm">
+                    <i data-lucide="trending-down" class="text-gold w-5 h-5 shrink-0"></i>
+                    <span>${a}</span>
+                </li>
+            `).join('');
+
+            lucide.createIcons();
+        }
+
+        function exportTXT() {
+            let text = "RAMADAN SHOPPING LIST\n====================\n\n";
+            for (const [cat, items] of Object.entries(plan.shoppingList)) {
+                text += `${cat.toUpperCase()}:\n`;
+                items.forEach(i => text += `- [ ] ${i}\n`);
+                text += "\n";
+            }
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'ramadan_shopping_list.txt';
+            a.click();
+        }
+
+        function exportJSON() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(plan, null, 2));
+            const a = document.createElement('a');
+            a.setAttribute("href", dataStr);
+            a.setAttribute("download", "ramadan_plan_data.json");
+            a.click();
+        }
+
+        function shareWA() {
+            const text = "My Ramadan Shopping List is ready! Check it out in the Planner Pro app.";
+            window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+        }
+    </script>
+</body>
+
+</html>

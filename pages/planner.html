@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan Your Ramadan | Planner Pro</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.3/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-navy">
+
+    <main class="container mx-auto px-6 py-12">
+        <div class="max-w-4xl mx-auto">
+            <header class="mb-12 text-center text-white">
+                <h1 class="text-4xl font-bold mb-4">Generate Your <span class="text-gold">Blessed</span> Plan</h1>
+                <p class="text-gray-400">Answer a few questions and our AI will craft a personalized 30-day experience.
+                </p>
+            </header>
+
+            <form id="mega-planner-form" class="glass p-10 space-y-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Basic Info -->
+                    <div class="space-y-6">
+                        <h3 class="text-xl font-bold text-navy flex items-center gap-2">
+                            <i data-lucide="info"></i> Basic Details
+                        </h3>
+                        <div class="input-group">
+                            <label>Family Size</label>
+                            <input type="number" id="familySize" class="input-premium" placeholder="e.g. 5" required>
+                        </div>
+                        <div class="input-group">
+                            <label>Budget Per Day (PKR)</label>
+                            <input type="number" id="dailyBudget" class="input-premium" placeholder="e.g. 3000"
+                                required>
+                        </div>
+                        <div class="input-group">
+                            <label>Cuisine Style</label>
+                            <select id="cuisineType" class="input-premium">
+                                <option value="Pakistani Desi">Pakistani Desi</option>
+                                <option value="Middle Eastern">Middle Eastern</option>
+                                <option value="Continental">Continental</option>
+                                <option value="Healthy Mix">Healthy Mix</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Preferences -->
+                    <div class="space-y-6">
+                        <h3 class="text-xl font-bold text-navy flex items-center gap-2">
+                            <i data-lucide="chef-hat"></i> Kitchen Setup
+                        </h3>
+                        <div class="input-group">
+                            <label>Equipments (Comma separated)</label>
+                            <input type="text" id="equipment" class="input-premium"
+                                placeholder="Oven, Air Fryer, Stove">
+                        </div>
+                        <div class="input-group">
+                            <label>Max Cooking Time (Mins)</label>
+                            <input type="number" id="cookingTime" class="input-premium" placeholder="e.g. 60">
+                        </div>
+                        <div class="input-group">
+                            <label>Days to Plan</label>
+                            <input type="number" id="days" min="1" max="30" value="7" class="input-premium">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <label class="block text-sm font-semibold text-brown">Any Special Requests / Dietaries?</label>
+                    <textarea id="prefs" class="input-premium h-32"
+                        placeholder="e.g. No spicy for kids, prefer lentils twice a week, include dessert suggestions..."></textarea>
+                </div>
+
+                <div class="pt-6 border-top">
+                    <button type="button" onclick="generate()" class="btn-premium w-full py-5 text-xl justify-center">
+                        <i data-lucide="wand-2"></i> Ignite AI Engine & Generate Plan
+                    </button>
+                </div>
+            </form>
+
+            <!-- Loading Modal -->
+            <div id="loading-overlay"
+                class="fixed inset-0 bg-navy/90 backdrop-blur-xl z-50 flex flex-col items-center justify-center hidden">
+                <div class="relative w-40 h-40 mb-8">
+                    <div class="absolute inset-0 border-4 border-gold/20 rounded-full"></div>
+                    <div class="absolute inset-0 border-4 border-gold border-t-transparent rounded-full animate-spin">
+                    </div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <span class="nastaliq text-gold text-4xl">رمضان</span>
+                    </div>
+                </div>
+                <h2 class="text-white text-2xl font-bold mb-2 animate-pulse">Calculating Nutritional Balance...</h2>
+                <p class="text-gray-400">Designing Iftars, Suhoors and Waste management tips.</p>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => UI.injectNavbar('planner'));
+
+        async function generate() {
+            const overlay = document.getElementById('loading-overlay');
+            overlay.classList.remove('hidden');
+
+            const data = {
+                familySize: document.getElementById('familySize').value,
+                budget: document.getElementById('dailyBudget').value,
+                cuisine: document.getElementById('cuisineType').value,
+                equipment: document.getElementById('equipment').value,
+                time: document.getElementById('cookingTime').value,
+                days: document.getElementById('days').value,
+                prefs: document.getElementById('prefs').value
+            };
+
+            const prompt = `Generate a high-quality Ramadan Meal Plan for ${data.days} days for a family of ${data.familySize}. 
+                Budget: PKR ${data.budget}/day. Cuisine: ${data.cuisine}. 
+                Equipment: ${data.equipment}. Available time: ${data.time} mins.
+                Pref/Dietaries: ${data.prefs}.
+                
+                IMPORTANT: Return ONLY a raw JSON strictly following this schema:
+                {
+                    "days": [
+                        {
+                            "day": 1,
+                            "suhoor": { "meal": "String", "items": ["Item 1", "Item 2"], "nutrition": {"calories": 0, "protein": 0, "carbs": 0, "fat": 0, "sugar": 0}, "leftoverTips": "String" },
+                            "iftar": { "meal": "String", "items": ["Item 1", "Item 2"], "nutrition": {"calories": 0, "protein": 0, "carbs": 0, "fat": 0, "sugar": 0}, "leftoverTips": "String" },
+                            "storageTip": "String",
+                            "wasteTip": "String",
+                            "totalCostEstimate": 0
+                        }
+                    ],
+                    "shoppingList": { "Proteins": [], "Vegetables": [], "Spices": [], "Others": [] },
+                    "budgetAdvice": ["Tip 1", "Tip 2"]
+                }
+                No markdown blocks. Just partial JSON.`;
+
+            const websocket = new WebSocket('wss://backend.buildpicoapps.com/ask_ai_streaming_v2');
+            let fullResponse = "";
+
+            websocket.addEventListener("open", () => {
+                websocket.send(JSON.stringify({ appId: "early-ahead", prompt: prompt }));
+            });
+
+            websocket.addEventListener("message", (event) => {
+                fullResponse += event.data;
+            });
+
+            websocket.addEventListener("close", (event) => {
+                overlay.classList.add('hidden');
+                if (event.code != 1000) {
+                    alert("Connection lost. Please try again.");
+                    return;
+                }
+                try {
+                    let cleanJson = fullResponse.trim();
+                    if (cleanJson.startsWith("```json")) cleanJson = cleanJson.replace("```json", "");
+                    if (cleanJson.endsWith("```")) cleanJson = cleanJson.slice(0, -3);
+                    const parsed = JSON.parse(cleanJson);
+                    localStorage.setItem('ramadan_plan', JSON.stringify(parsed));
+                    window.location.href = 'dashboard.html';
+                } catch (e) {
+                    console.error(e, fullResponse);
+                    alert("AI indexing failed. Please try again.");
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
