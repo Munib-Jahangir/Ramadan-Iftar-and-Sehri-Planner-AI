@@ -2,7 +2,7 @@
   <img src="assets/github-banner.png" width="100%" alt="Ramadan Planner Pro Banner">
 </div>
 
-# 🌙 Ramadan Planner Pro
+<h1 align="center">🌙 Ramadan Planner Pro</h1>
 ### *Elevate Your Spiritual & Physical Well-being This Ramadan*
 
 Ramadan Planner Pro is an advanced, AI-powered meal management application designed to help families organize their Iftar and Suhoor experiences. By leveraging the power of GPT-3.5, it creates personalized 30-day meal plans based on your family size, budget, and dietary preferences—all within a stunning, premium interface.
