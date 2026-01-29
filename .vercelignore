@@ -1,6 +1,0 @@
-mobile-app/
-android/
-.gradle/
-*.apk
-.agent/
-node_modules/
