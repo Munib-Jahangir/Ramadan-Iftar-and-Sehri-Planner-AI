@@ -1,0 +1,119 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ramadan Iftar/Suhoor Planner</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.3/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #F3F4F6;
+        }
+        h1 {
+            color: #4F46E5;
+        }
+        .button-submit {
+            background-color: #D97706;
+            color: #FFF;
+        }
+        .output-section {
+            background-color: #FFF;
+            padding: 16px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+    <div class="container mx-auto px-4 py-6">
+        <h1 class="text-2xl font-bold mb-4">Ramadan Iftar/Suhoor Planner</h1>
+        <form id="mealPlanForm" class="bg-white p-6 rounded-lg shadow-md">
+            <div class="mb-4">
+                <label for="familySize" class="block text-sm font-semibold">Family Size</label>
+                <input type="number" id="familySize" required class="mt-2 p-2 border border-gray-300 rounded w-full">
+            </div>
+            <div class="mb-4">
+                <label for="ageGroups" class="block text-sm font-semibold">Age Groups</label>
+                <input type="text" id="ageGroups" placeholder="E.g., Adults, children" required class="mt-2 p-2 border border-gray-300 rounded w-full">
+            </div>
+            <div class="mb-4">
+                <label for="dailyBudget" class="block text-sm font-semibold">Daily Budget (PKR)</label>
+                <input type="number" id="dailyBudget" placeholder="E.g., 2000" required class="mt-2 p-2 border border-gray-300 rounded w-full">
+            </div>
+            <div class="mb-4">
+                <label for="cookingTime" class="block text-sm font-semibold">Cooking Time Available</label>
+                <input type="text" id="cookingTime" placeholder="E.g., 1 hour" required class="mt-2 p-2 border border-gray-300 rounded w-full">
+            </div>
+            <div class="mb-4">
+                <label for="cuisineType" class="block text-sm font-semibold">Cuisine Type</label>
+                <input type="text" id="cuisineType" placeholder="E.g., Pakistani Desi" required class="mt-2 p-2 border border-gray-300 rounded w-full">
+            </div>
+            <div class="mb-4">
+                <label for="equipment" class="block text-sm font-semibold">Equipment Available</label>
+                <input type="text" id="equipment" placeholder="E.g., Oven, Stove" required class="mt-2 p-2 border border-gray-300 rounded w-full">
+            </div>
+            <div class="mb-4">
+                <label for="days" class="block text-sm font-semibold">Number of Days for the Plan (1-30)</label>
+                <input type="number" id="days" min="1" max="30" required class="mt-2 p-2 border border-gray-300 rounded w-full">
+            </div>
+            <div class="mb-4">
+                <label for="foodItems" class="block text-sm font-semibold">Preferred Food Items</label>
+                <input type="text" id="foodItems" placeholder="E.g., Chicken, Lentils" class="mt-2 p-2 border border-gray-300 rounded w-full">
+            </div>
+            <button type="button" class="button-submit mt-4 py-2 px-4 rounded font-semibold" onclick="submitForm()">Generate My Ramadan Plan! 🌙</button>
+        </form>
+        
+        <div id="output" class="output-section mt-6">
+            <h2 class="text-xl font-bold mb-2">Your Ramadan Meal Plan</h2>
+            <p id="outputText" class="text-lg"></p>
+        </div>
+    </div>
+    <footer class="mt-8 p-4 text-center">
+        <p><a href="#" class="text-blue-500 underline">Made with ❤️</a></p>
+    </footer>
+    <script>
+        function submitForm() {
+            const familySize = document.getElementById('familySize').value;
+            const ageGroups = document.getElementById('ageGroups').value;
+            const dailyBudget = document.getElementById('dailyBudget').value;
+            const cookingTime = document.getElementById('cookingTime').value;
+            const cuisineType = document.getElementById('cuisineType').value;
+            const equipment = document.getElementById('equipment').value;
+            const days = document.getElementById('days').value;
+            const foodItems = document.getElementById('foodItems').value;
+            const outputText = document.getElementById('outputText');
+            outputText.innerText = '';
+
+            const websocket = new WebSocket('wss://backend.buildpicoapps.com/ask_ai_streaming_v2');
+            
+            const substitutedPrompt = `Generate a customized Ramadan Iftar/Suhoor plan for ${days} days for a family of ${familySize} with a budget of PKR ${dailyBudget}. Focus on ${cuisineType} cuisine, considering ${ageGroups} preferences and available ${equipment} for cooking. Include food items: ${foodItems}. Ensure all recipes are Halal certified with nutrition info.`;
+
+            websocket.addEventListener("open", () => {
+                websocket.send(
+                    JSON.stringify({
+                        appId: "early-ahead",
+                        prompt: substitutedPrompt,
+                    })
+                );
+            });
+
+            websocket.addEventListener("message", (event) => {
+                outputText.innerText = `${outputText.innerText}${event.data}`;
+            });
+
+            websocket.addEventListener("close", (event) => {
+                console.log("Connection closed", event.code, event.reason);
+                if (event.code != 1000) {
+                    alert("Oops, we ran into an error. Refresh the page and try again.");
+                }
+            });
+
+            websocket.addEventListener("error", (error) => {
+                console.log('WebSocket error', error);
+                alert("Oops, we ran into an error. Refresh the page and try again.");
+            });
+        }
+    </script>
+</body>
+</html>
