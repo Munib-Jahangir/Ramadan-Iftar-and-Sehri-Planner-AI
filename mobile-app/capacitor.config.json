@@ -1,0 +1,17 @@
+{
+  "appId": "com.sehrify.ai",
+  "appName": "Sehrify AI",
+  "webDir": "../web/out",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 3000,
+      "launchAutoHide": true,
+      "backgroundColor": "#4b0082",
+      "androidSplashResourceName": "splash",
+      "androidScaleType": "CENTER_CROP",
+      "showSpinner": true,
+      "androidSpinnerStyle": "large",
+      "spinnerColor": "#fbbf24"
+    }
+  }
+}

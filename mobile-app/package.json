@@ -1,0 +1,26 @@
+{
+  "name": "mobile-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "sync": "npx cap sync",
+    "copy": "npx cap copy",
+    "open:android": "npx cap open android",
+    "build:apk": "cd android && .\\gradlew assembleDebug",
+    "build:release": "cd android && .\\gradlew assembleRelease"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@capacitor/android": "^8.0.2",
+    "@capacitor/cli": "^8.0.2",
+    "@capacitor/core": "^8.0.2"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/splash-screen": "^8.0.0"
+  }
+}
