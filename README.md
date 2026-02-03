@@ -1,12 +1,36 @@
-# 🌙 Sehrify AI - The Ultimate Ramadan Planner
+<h1 align="center">🌙 Sehrify AI - The Ultimate Ramadan Planner</h1>
 
-[![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
-[![Firebase](https://img.shields.io/badge/Firebase-11-orange?style=for-the-badge&logo=firebase)](https://firebase.google.com/)
-[![Capacitor](https://img.shields.io/badge/Capacitor-7.0-blueviolet?style=for-the-badge&logo=capacitor)](https://capacitorjs.com/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+<p align="center">
+  <a href="https://nextjs.org/"><img src="https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js" alt="Next.js"></a>
+  <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript" alt="TypeScript"></a>
+  <a href="https://firebase.google.com/"><img src="https://img.shields.io/badge/Firebase-11-orange?style=for-the-badge&logo=firebase" alt="Firebase"></a>
+  <a href="https://capacitorjs.com/"><img src="https://img.shields.io/badge/Capacitor-7.0-blueviolet?style=for-the-badge&logo=capacitor" alt="Capacitor"></a>
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge" alt="License: MIT"></a>
+</p>
+
+<p align="center">
+  <img src="images/banner.png" alt="Sehrify AI Banner" width="100%">
+</p>
 
 **Sehrify AI** is a premium, open-source Ramadan Assistant designed to elevate your spiritual journey. From personalized Iftar and Sehri planning to AI-powered nutrition insights and real-time shopping lists, it’s the only companion you need this Ramadan.
+
+---
+
+## 🖼️ App Screenshots
+
+### 💻 Desktop View
+<p align="center">
+  <img src="images/landing.png" width="32%" />
+  <img src="images/dashboard.png" width="32%" />
+  <img src="images/listtodo.png" width="32%" />
+</p>
+
+### 📱 Mobile View
+<p align="center">
+  <img src="images/landingresponsive.png" width="30%" />
+  <img src="images/responsive dashboard.png" width="30%" />
+  <img src="images/shoppingresponsivelis.png" width="30%" />
+</p>
 
 ---
 
