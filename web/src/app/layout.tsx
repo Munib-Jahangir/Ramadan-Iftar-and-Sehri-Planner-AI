@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Sidebar from "@/components/Sidebar";
@@ -14,6 +14,12 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 export const metadata: Metadata = {
   title: "Sehrify AI | Professional Ramadan Planner",
   description: "AI-powered Ramadan Iftar & Suhoor management with cloud syncing.",
@@ -23,6 +29,7 @@ export const metadata: Metadata = {
     apple: "/favicon.png",
   },
 };
+
 
 export default function RootLayout({
   children,

@@ -12,7 +12,14 @@
   --success: #3fb950;
   --card-bg: rgba(7, 18, 33, 0.95);
   --glass-border: rgba(255, 255, 255, 0.1);
+  
+  /* Safe Area Insets for Mobile */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
 }
+
 
 @theme inline {
   --color-background: var(--background);
