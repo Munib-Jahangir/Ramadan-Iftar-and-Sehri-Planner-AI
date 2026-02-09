@@ -42,7 +42,9 @@ next-env.d.ts
 *.apk
 *.aar
 *.jks
+!/mobile-app/Final Build/**
 captures/
 .externalNativeBuild
 .cxx
 local.properties
+
