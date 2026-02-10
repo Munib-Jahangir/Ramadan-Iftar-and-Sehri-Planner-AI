@@ -1,4 +1,6 @@
-
+<p align="center">
+  <img src="images/banner.png" alt="Sehrify AI Banner" width="100%">
+</p>
 <h1 align="center">🌙 Sehrify AI - The Ultimate Ramadan Planner</h1>
 
 <p align="center">
@@ -9,9 +11,7 @@
   <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge" alt="License: MIT"></a>
 </p>
 
-<p align="center">
-  <img src="images/banner.png" alt="Sehrify AI Banner" width="100%">
-</p>
+
 >>>>>>> 75f775a (final build)
 
 **Sehrify AI** is a premium, open-source Ramadan Assistant designed to elevate your spiritual journey. From personalized Iftar and Sehri planning to AI-powered nutrition insights and real-time shopping lists, it’s the only companion you need this Ramadan.
