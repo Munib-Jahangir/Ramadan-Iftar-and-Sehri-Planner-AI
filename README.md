@@ -1,19 +1,4 @@
-<p align="center">
-  <img src="images/banner.png" alt="Sehrify AI Banner" width="100%">
-</p>
 
-<h1 align="center">🌙 Sehrify AI - The Ultimate Ramadan Planner</h1>
-
-<p align="center">
-  <a href="https://nextjs.org/"><img src="https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js" alt="Next.js"></a>
-  <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript" alt="TypeScript"></a>
-  <a href="https://firebase.google.com/"><img src="https://img.shields.io/badge/Firebase-11-orange?style=for-the-badge&logo=firebase" alt="Firebase"></a>
-  <a href="https://capacitorjs.com/"><img src="https://img.shields.io/badge/Capacitor-7.0-blueviolet?style=for-the-badge&logo=capacitor" alt="Capacitor"></a>
-  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge" alt="License: MIT"></a>
-</p>
-
-
-=======
 <h1 align="center">🌙 Sehrify AI - The Ultimate Ramadan Planner</h1>
 
 <p align="center">
