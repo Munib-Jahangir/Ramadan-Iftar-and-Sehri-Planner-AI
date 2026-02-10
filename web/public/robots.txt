@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sehrify-ai.vercel.app/sitemap.xml

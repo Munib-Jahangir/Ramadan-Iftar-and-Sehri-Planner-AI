@@ -28,6 +28,9 @@ export const metadata: Metadata = {
     shortcut: "/favicon.png",
     apple: "/favicon.png",
   },
+  verification: {
+    google: "89af2a1e57d0f47b",
+  },
 };
 
 
