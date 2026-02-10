@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     apple: "/favicon.png",
   },
   verification: {
-    google: "89af2a1e57d0f47b",
+    google: "xYEuMTDr5VJwCkmR0xu_AHbjdAXmRRSdSeUySNoDWHM",
   },
 };
 
